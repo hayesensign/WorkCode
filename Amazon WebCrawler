@@ -1,0 +1,67 @@
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import pandas as pd
+import openpyxl
+
+driver = webdriver.Chrome(r"C:\Users\Hayes Ensign\AppData\Local\Temp\Temp3_chromedriver_win32.zip\chromedriver.exe")
+# opens webdriver
+df = pd.read_excel("Funko.xlsx", "Sheet2")
+# opens file to edit
+
+for x in range(2794):
+    str1 = "https://www.amazon.com/s?k="
+    str2 = str(df['ISBN'][x])
+    # gets ISBN product value from excel file
+    str3 = "&crid=2HGIVEFOR2XNZ&sprefix="
+    str4 = "%2Caps%2C187&ref=nb_sb_noss"
+    str5 = str1 + str2 + str3 + str2 + str4
+    # creates url string for webbrowser program to load
+    driver.get(str5)
+    # loads url
+    
+    elem = driver.find_element(By.CLASS_NAME, "s-main-slot s-result-list s-search-results sg-row")
+    # finds element of main page after loading
+    subelems = elem.find_elements(By.XPATH, "//*[@id=\"search\"]/div[1]/div[1]/div/span[1]/div[1]/*")
+    # returns list of subelements within elem
+    num = len(subelems)
+    # gets length of subelems
+    
+    if (num < 4):
+        a = sheet['G' + str(x + 2)]
+        a.value = "Item not listed"
+        
+    else:
+        product = driver.find_element(By.XPATH, "//*[@id=\"search\"]/div[1]/div[1]/div/span[1]/div[1]/div[2]")
+        # finds first element on main page after loading
+        product.click()
+        # clicks elem2 
+        
+        title = driver.find_element(By.ID, "productTitle")
+        # finds element "productTitle"
+        titleString = elem3.text
+        # gets text of "productTitle"
+        a = sheet['C' + str(x + 2)]
+        a.value = titleString
+        # sets cell value at index (x + 2) in column 'C' to "productTitle"
+        
+        description = driver.find_element(By.ID, 'productDescription')
+        # finds element "productDescription"
+        descriptionString = elem4.text
+        # gets text of "productDescription"
+        b = sheet['E' + str(x + 2)]
+        b.value = descriptionString
+        # sets cell value at index (x + 2) in column 'E' to "productDescription"
+        
+        image = driver.find_element(BY.XPATH, '//*[@id="landingImage"]')
+        # finds element "landingImage"
+        imageString = str2 + ".jpg"
+        # creates string of (product ISBN number).jpg
+        with open(imageString, 'wb') as file:
+            file.write(imageString.screenshot_as_png)
+            # saves image as png file
+
+wb.save("Funko.xlsx")
+# saves file
+driver.quit()
+# closes browser
