@@ -1,0 +1,27 @@
+from selenium import webdriver
+
+driver = webdriver.Chrome()
+# opens browser
+count = 2
+# keeps track of location while iterating through file
+nl = []
+# creates a list of elements that get printed
+
+with open(r"C:\Users\ensignh\OneDrive - Books-A-Million, Inc\Documents\Work Projects\Calendars.txt") as f:
+    for line in f:
+        str1 = "https://www.booksamillion.com/p/"
+        str2 = line[0:13]
+        # gets ISBN number from file
+        str3 = str1 + str2
+        # creates url string for webbrowser program to load
+        driver.get(str3)
+        # loads url
+        if (driver.title != "Site Error: Books-A-Million Online"):
+        # checks if url that gets generated results in a "Site Error" webpage being generated
+            nl.append(count)
+            # adds index of strings that generate in a "Site Error" webpage getting generated
+        count += 1
+        
+print(nl)
+driver.quit()
+# closes browseer
