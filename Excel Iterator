@@ -1,0 +1,38 @@
+import pandas as pd
+import openpyxl
+
+df = pd.read_excel("10.25 Hayes - 2NC Website List_Star Wars 9.19.22.xlsx", "Priority 3 - BOOK")
+# opens file to edit
+eg = pd.read_excel("Star Wars 9.28.xlsx", "all_products")
+# opens file to procure data for other file
+
+wb = openpyxl.load_workbook("10.25 Hayes - 2NC Website List_Star Wars 9.19.22.xlsx")
+# opens file to save it later
+sheet = wb.active
+
+ctr = 0
+# keeps track of location while iterating through file
+for x in range(1538):
+    str1 = df['ISBN'][x]
+    # saves value at x index column 'ISBN' as string
+    found = 0
+    # boolean value that gets incremented if element at location x in first file matches element at location x in second file
+    while (found < 1):
+        str2 = eg['pid'][ctr]
+        if (str1 == str2):
+            found += 1
+            a = sheet['O' + str(x + 2)]
+            a.value = eg['title'][ctr]
+            # sets cell value at index (x + 2) in column 'O' to value of cell at index ctr of column 'title' 
+            b = sheet['P' + str(x + 2)]
+            b.value = eg['description'][ctr]
+            # sets cell value at index (x + 2) in column 'P' to value of cell at index ctr of column 'description'
+            c = sheet['R' + str(x + 2)]
+            c.value = eg['image_url'][ctr]
+            # sets cell value at index (x + 2) in column 'R' to value of cell at index ctr of column 'image_url'
+        ctr += 1
+        
+wb.save = ("10.25 Hayes - 2NC Website List_Star Wars 9.19.22.xlsx")
+# saves file
+            
+
