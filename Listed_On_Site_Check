@@ -1,0 +1,15 @@
+import pandas as pd
+import openpyxl
+
+df = pd.read_excel("11.2 Funko to add.xlsx", "Sheet2")
+wb = openpyxl.load_workbook("11.2 Funko to add.xlsx")
+sheet = wb.active
+
+
+for x in range(594):
+    str1 = str(df['Web Title'][x])
+    if (str1 == "nan"):
+        a = sheet['L' + str(x + 2)]
+        a.value = "Item not listed"
+        
+wb.save("11.2 Funko to add.xlsx")
