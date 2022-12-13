@@ -1,0 +1,12 @@
+import pandas as pd
+import openpyxl
+
+df = pd.read_excel("Bargain for Hayes to Add1.xlsx", "Sheet1")
+count = 0
+for x in range(120):
+    str1 = str(df['Retail Price'][x])
+    str2 = str(df['Discount Price'][x])
+    if (str1 != str2):
+        count += 1
+    print(str(df['Discount Price'][x]))
+print(count)
