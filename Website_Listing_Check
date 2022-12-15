@@ -1,0 +1,38 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+driver.get("https://www.booksamillion.com/")
+elemList = driver.find_elements(By.XPATH, "/html/body/ul/li[12]/div")
+not_Listed = []
+count = 1
+
+for x in range(3):
+    str1 = "/html/body/ul/li[12]/div/div["
+    str2 = str(x + 1)
+    str3 = "]/ul"
+    str4 = str1 + str2 + str3
+    elemList2 = driver.find_elements(By.XPATH, str4)
+    
+    for y in range(elemList2):
+        str7 = "/li["
+        str8 = str(y + 1)
+        str9 = "]"
+        str10 = str4 + str7 + str8 + str9
+        
+        if (str(driver.find_element(By.XPATH, str10).text) != "Bargain Favorites" or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Young Adult Books"
+            or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Fiction" or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Nonfiction"
+            or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Kids Fiction" or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Kids Nonfiction"
+            or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Faith & Inspiration"):
+            driver.find_element(By.LINK_TEXT, ""):
+                
+                str11 = str10 + "/a"
+                driver.find_element(By.XPATH, str11).click()
+                driver.switch_to.window(driver.window_handles[count])
+                if (len(driver.find_elements(By.XPATH, "/html/body/div[3]/div[4]")) < 3):
+                    not_Listed.append(str(driver.find_element(By.XPATH, str10).text))
+                count += 1
+                driver.switch_to.window(driver.window_handles[0])
+
+driver.quit()
+print(not_Listed)
