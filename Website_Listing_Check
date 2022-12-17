@@ -24,7 +24,6 @@ for x in range(3):
             or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Fiction" or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Nonfiction"
             or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Kids Fiction" or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Kids Nonfiction"
             or str(driver.find_element(By.XPATH, str10).text) != "Bargains in Faith & Inspiration"):
-            driver.find_element(By.LINK_TEXT, ""):
                 
                 str11 = str10 + "/a"
                 driver.find_element(By.XPATH, str11).click()
